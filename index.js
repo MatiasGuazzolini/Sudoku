@@ -1,36 +1,36 @@
 var  numSelected =null;
 var tileSelected =null;
 var errors=0;
-var board =[
-    "--74916-5",
-    "2---6-3-9",
-    "-----7-1-",
-    "-586----4",
-    "--3----9-",
-    "--62--187",
-    "9-4-7---2",
-    "67-83----",
-    "81--45---",
+var board =[            //cargamos el board que mostraremos y la solucion con la cual vamos a estar comparandola
+    "-6-1-4-5-",
+    "--83-56--",
+    "2-------1",
+    "8--4-7--6",
+    "--6---3--",
+    "7--9-1--4",
+    "5-------2",
+    "--72-69--",
+    "-4-5-8-7-",
 ]
 var solution =[
-    "387491625",
-    "241568379",
-    "569327418",
-    "758619234",
-    "123784596",
-    "496253187",
-    "934176852",
-    "675832941",
-    "812945763",
+    "963174258",
+    "178325649",
+    "254689731",
+    "821437596",
+    "496852317",
+    "735961824",
+    "589713462",
+    "317246985",
+    "642598173",
 ]
 
-window.onload = function () {
+window.onload = function () {       //hago que al cargar la ventana se ejecute la funcion
     setGame();
 }
 
 function setGame () {
     //Digitos debajo del board
-    for (let i=1; i<=9; i++){
+    for (let i=1; i<=9; i++){       
         let number= document.createElement("div");
         number.id=i;
         number.innerText = i;
@@ -41,21 +41,21 @@ function setGame () {
 
     //Cremaos el board 9x9 aca por el mismo motivo mencionado anteriormente
 
-    for (let m=0; m<9; m++){
+    for (let m=0; m<9; m++){                    // voy rellenando filas y columnas con el for
         for  (let g=0; g<9; g++){
             let tile = document.createElement("div");
             tile.id = m.toString() + "-" + g.toString();
-            if (board[m][g] != "-"){
+            if (board[m][g] != "-"){            //hago que las tiles que no esten vacias, impriman su valor 
                 tile.innerText= board[m][g];
                 tile.classList.add("tile-start");
             }
-            if (m == 3 || m == 6){
+            if (m == 3 || m == 6){                      //agrego la linea horizontal y vertical del board
                 tile.classList.add("horizontal-line");
             }
             if (g==3 || g == 6){
                 tile.classList.add("vertical-line");
             }
-            tile.addEventListener("click", selectedTile);
+            tile.addEventListener("click", selectedTile);       //eventlistener de click y le asigno el valor de selectedTile
             tile.classList.add("tile");
             document.getElementById("board").append(tile);
         }
@@ -76,15 +76,15 @@ function selectedTile() {
         if(this.innerText != ""){
             return;
         }
-        this.innerText = numSelected.id;
+        
         let coords= this.id.split("-");     //hacemos split para tener numeros individuales, 0-0, 0-1, que seria ["0", "0"] y asi consecutivamente
         let m= parseInt(coords[0]);     //usamos el parseint debido a que tenemos un string en el array y queremos que nos devuelva un entero (int)
         let g = parseInt(coords [1]);
 
-        if (solution[m][g] == numSelected.id){
+        if (solution[m][g] == numSelected.id){      //asignamos el id de nu,selected si el valor que ingresamos coincide con la solucion
             this.innerText = numSelected.id
         }
-        else{
+        else{                                       //vamos sumando los erroes que se cometen
             errors+= 1;
             document.getElementById("errors").innerText = errors;
         }
